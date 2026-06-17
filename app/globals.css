@@ -1,33 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --color-bg: #0A0A0F;
+  --color-surface: #12121A;
+  --color-surface-2: #1A1A27;
+  --color-navy: #0F172A;
+  --color-violet: #7C3AED;
+  --color-crimson: #DC2626;
+  --color-amber: #D97706;
+  --color-emerald: #059669;
+  --color-text: #F8FAFC;
+  --color-text-muted: #94A3B8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Inter', sans-serif;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--color-surface); }
+::-webkit-scrollbar-thumb { background: #2D2D40; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #3D3D55; }
+
+::selection { background: rgba(124, 58, 237, 0.3); color: var(--color-text); }
+
+@keyframes criticalPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); }
+}
+.animate-critical-pulse { animation: criticalPulse 2s ease-in-out infinite; }
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, var(--color-surface) 25%, var(--color-surface-2) 50%, var(--color-surface) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes scanLine {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(400px); opacity: 0; }
+}
+.scan-line { animation: scanLine 3s ease-in-out infinite; }
+
+.glow-violet { box-shadow: 0 0 20px rgba(124, 58, 237, 0.4); }
+.glow-red { box-shadow: 0 0 20px rgba(220, 38, 38, 0.4); }
+
+.gradient-text {
+  background: linear-gradient(135deg, #7C3AED, #A78BFA, #60A5FA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124, 58, 237, 0.2); }
+
+.hero-min-h { min-height: 100svh; }
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
+}
+
+/* Keyboard focus: only show outline on keyboard navigation, not mouse */
+:focus:not(:focus-visible) { outline: none; }
+:focus-visible { outline: 2px solid #7C3AED; outline-offset: 2px; }
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
 }
