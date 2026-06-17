@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 import { validateEnv } from '@/lib/env';
 
-validateEnv();
-
 const MONGODB_URI = process.env.MONGODB_URI!;
 
 interface MongooseCache {
@@ -21,6 +19,7 @@ if (!global.mongoose) {
 }
 
 export async function connectDB(): Promise<typeof mongoose> {
+  validateEnv();
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
